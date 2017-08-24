@@ -1,6 +1,11 @@
 html {
 }
-
+body{
+        background: #000;
+        padding-top:5px;
+        padding-left:20px;
+        padding-right:20px;
+      }
 #shadow {
     box-shadow: 0 1px 1px 1px #000000;
     -moz-box-shadow: 0 1px 1px 1px #000000;

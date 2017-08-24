@@ -98,7 +98,7 @@ Vue.component('execution-status', {
   data () {
     return {
       passed: 100,
-      failed: 100,
+      failed: 200,
     }
   },
   computed: {
@@ -154,12 +154,12 @@ Vue.component('progress-per-area', {
  props: ['progress'],
   data () {
     return {
-      cki: 16,
-	  ckitotal: 98,
+      cki: 50,
+	  ckitotal: 60,
       vis: 15,
-	  vistotal: 32,
-	  sfh: 80,
-	  sfhtotal: 100
+	  vistotal: 20,
+	  sfh: 8,
+	  sfhtotal: 10
     }
   },
   computed: {

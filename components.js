@@ -46,10 +46,10 @@ Vue.component('force-release', {
   props: ['releasestats'],
     data () {
     return {
-      date: "2017-08-23",
+      date: "2017-08-24",
       release: "4.2.1",
 	  starttime: 2,
-	  latesttimestamp: 34
+	  latesttimestamp: 4
     }
   },
   computed: {
@@ -97,8 +97,8 @@ Vue.component('execution-status', {
   props: ['testcases_status_totals'],
   data () {
     return {
-      passed: 100,
-      failed: 200,
+      passed: 102,
+      failed: 0
     }
   },
   computed: {
@@ -113,7 +113,7 @@ Vue.component('overall-status', {
   <div class="tile is-parent">
     <article v-bind:class="{'is-danger': isfailed, 'is-success': isSuccess}" class="tile is-child notification">
 	      <p class="subtitle">Overall Status</p>
-			  <div style="display: inline-block; text-align: center; width: 100%; color:#363636; font-size:100px" v-if="isfailed == true" class="content"><b>{{ amountfailed }}</b></div>
+			  <div style="display: inline-block; text-align: center; vertical-align: middle; width: 100%; color:#363636; font-size:100px" v-if="isfailed == true" class="content"><b>{{ nok }}</b></div>
 			  <div style="display: inline-block; text-align: center; width: 100%; color:#363636; font-size:100px" v-else class="content"><b>{{ go }}</b></div>
 	</article>
   </div>
@@ -122,7 +122,7 @@ Vue.component('overall-status', {
   props: ['gonogo'],
   data () {
     return {
-      isfailed: false,
+      isfailed: true,
 	  go: "OK",
 	  nok: "NOK"
     }
@@ -141,10 +141,8 @@ Vue.component('progress-per-area', {
 			<article class="tile is-child notification is-Dark">
 				<p class="subtitle">Progress per area</p>
 				<div class="content">
-					OVERALL<progress class="progress is-small is-Warning" :value="progressoverall" max="100">{{ progressoverall }}</progress>
-					CKI<progress class="progress is-small is-Warning" :value="progresscki" max="100">{{ progresscki }}</progress>
-					VIS<progress class="progress is-small is-Warning" :value="progressvis" max="100">{{ progressvis }}</progress>
-					SFH<progress class="progress is-small is-Warning" :value="progresssfh" max="100">{{ progresssfh }}</progress>
+					OVERALL<progress v-bind:class="{'is-warning': incompleteFlagOverall, 'is-success': completeFlagOverall}" class="progress is-small" :value="progressoverall" max="100">{{ progressoverall }}</progress>
+					CKI<progress v-bind:class="{'is-warning': incompleteFlagCKI, 'is-success': completeFlagCKI}" class="progress is-small" :value="progresscki" max="100">{{ progresscki }}</progress>
 				</div>
 			</article>
 		</div>
@@ -154,26 +152,31 @@ Vue.component('progress-per-area', {
  props: ['progress'],
   data () {
     return {
-      cki: 50,
+      cki: 10,
 	  ckitotal: 60,
-      vis: 15,
-	  vistotal: 20,
-	  sfh: 8,
-	  sfhtotal: 10
     }
   },
   computed: {
+	 incompleteFlagOverall() { 
+		calculation = this.progressoverall < 100 ? true : false
+		return calculation
+	 },
+	 
+	 completeFlagOverall() { return !this.incompleteFlagOverall},
+	 
 	 progressoverall() {
-      return (((this.cki+this.vis+this.sfh)/(this.ckitotal+ this.vistotal + this.sfhtotal))*100)
+      return (((this.cki)/(this.ckitotal))*100)
     },
+	
+	incompleteFlagCKI() { 
+		calculation = this.progresscki < 100 ? true : false
+		return calculation
+	 },
+	 
+	 completeFlagCKI() { return !this.incompleteFlagCKI},
+
 	progresscki() {
       return ((this.cki/this.ckitotal)*100)
-    },
-	progressvis() {
-      return ((this.vis/this.vistotal)*100)
-    },
-	progresssfh() {
-      return ((this.sfh/this.sfhtotal)*100)
     }
   }
 });
@@ -204,12 +207,12 @@ Vue.component('datatable-with-failures', {
                   <tr>
                     <th>CKI_1</th>
                     <td>FAIL</td>
-                    <td>Ging niet goed omdat erweer een foutje maakte zoals gewoonlijk!!!!</td>
+                    <td>Response geeft error 500</td>
                   </tr>
                   <tr>
                     <th>CKI_2</th>
                     <td>FAIL</td>
-                    <td>Ging niet goed</td>
+                    <td>Achterstand wordt niet weergegeven in overzicht</td>
                   </tr>
                 </tbody>
               </table>
@@ -221,6 +224,8 @@ Vue.component('datatable-with-failures', {
   ,
   props: ['todo']
 });
+
+
 
 var app = new Vue({
   el: '#app'

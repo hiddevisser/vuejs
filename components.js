@@ -1,7 +1,7 @@
 Vue.component('current-time', {
   template: `
 <div style="display: inline-block; text-align: right; width: 100%; color:#adabab">
-          <p>{{ formatedDate }}{{ formatedTime }}</p>
+          <p>{{ formatedDate }}&nbsp{{ formatedTime }}</p>
       </div>
   `,
   props: ['timer'],

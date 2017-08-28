@@ -33,7 +33,7 @@ Vue.component('force-release', {
         <article class="tile is-child notification is-Dark">
           <p class="subtitle">Force Release</p>
           <div class="content">
-		  Release: {{ release }}
+	      Release: {{ release }}
 		  <br>
 		  Date: {{ formatedExecutionDate }}
 		  <br>
@@ -286,7 +286,7 @@ var app = new Vue({
     searchQuery: '',
     gridColumns: ['Test_Name', 'Status', 'Error_Description'],
     gridData: [
-      { Test_Name: 'Test1_Cki', Status: 'Warning', Error_Description: 'Alles fout' },
+      { Test_Name: 'Test1_Cki', Status: 'Warning', Error_Description: 'Alles goed fout' },
       { Test_Name: 'Test2_Cki', Status: 'Fail', Error_Description: 'Alles fout' },
       { Test_Name: 'Test1_VIS', Status: 'Error', Error_Description: 'Alles fout' },
       { Test_Name: 'Test1_VIS', Status: 'Fatal', Error_Description: 'Alles fout' }

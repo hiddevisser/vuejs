@@ -143,6 +143,9 @@ Vue.component('progress-per-area', {
 				<div class="content">
 					OVERALL<progress v-bind:class="{'is-warning': incompleteFlagOverall, 'is-success': completeFlagOverall}" class="progress is-small" :value="progressoverall" max="100">{{ progressoverall }}</progress>
 					CKI<progress v-bind:class="{'is-warning': incompleteFlagCKI, 'is-success': completeFlagCKI}" class="progress is-small" :value="progresscki" max="100">{{ progresscki }}</progress>
+					VIS<progress v-bind:class="{'is-warning': incompleteFlagVIS, 'is-success': completeFlagVIS}" class="progress is-small" :value="progressvis" max="100">{{ progressvis }}</progress>
+					SFH<progress v-bind:class="{'is-warning': incompleteFlagSFH, 'is-success': completeFlagSFH}" class="progress is-small" :value="progresssfh" max="100">{{ progresssfh }}</progress>
+					Moraliteitstoets<progress v-bind:class="{'is-warning': incompleteFlagMORAL, 'is-success': completeFlagMORAL}" class="progress is-small" :value="progressmoral" max="100">{{ progressmoral }}</progress>
 				</div>
 			</article>
 		</div>
@@ -154,6 +157,12 @@ Vue.component('progress-per-area', {
     return {
       cki: 10,
 	  ckitotal: 60,
+	  vis: 30,
+	  vistotal: 30,
+	  sfh: 15,
+	  sfhtotal: 30,
+	  moral: 15,
+	  moraltotal: 30
     }
   },
   computed: {
@@ -165,7 +174,7 @@ Vue.component('progress-per-area', {
 	 completeFlagOverall() { return !this.incompleteFlagOverall},
 	 
 	 progressoverall() {
-      return (((this.cki)/(this.ckitotal))*100)
+      return (((this.cki + this.vis + this.sfh + this.moral)/(this.ckitotal + this.vistotal + this.sfhtotal + this.moraltotal))*100)
     },
 	
 	incompleteFlagCKI() { 
@@ -173,10 +182,47 @@ Vue.component('progress-per-area', {
 		return calculation
 	 },
 	 
-	 completeFlagCKI() { return !this.incompleteFlagCKI},
+	 completeFlagCKI() { return !this.incompleteFlagCKI
+	 },
 
 	progresscki() {
       return ((this.cki/this.ckitotal)*100)
+    },
+		
+	incompleteFlagVIS() { 
+		calculation = this.progressvis < 100 ? true : false
+		return calculation
+	},
+	 
+	completeFlagVIS() { return !this.incompleteFlagVIS
+	},
+
+	progressvis() {
+      return ((this.vis/this.vistotal)*100)
+    },
+	
+	incompleteFlagSFH() { 
+		calculation = this.progresssfh < 100 ? true : false
+		return calculation
+	},
+	 
+	completeFlagSFH() { return !this.incompleteFlagSFH
+	},
+
+	progresssfh() {
+      return ((this.sfh/this.sfhtotal)*100)
+    },
+	
+	incompleteFlagMORAL() { 
+		calculation = this.progressmoral < 100 ? true : false
+		return calculation
+	},
+	 
+	completeFlagMORAL() { return !this.incompleteFlagMORAL
+	},
+
+	progressmoral() {
+      return ((this.moral/this.moraltotal)*100)
     }
   }
 });

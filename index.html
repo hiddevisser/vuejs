@@ -1,12 +1,43 @@
 <html>
   <head>
-    <script src="/vue.2.4.2.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.min.css">
+   <title>ART - Dashboard</title>
+		<script src="/vue.2.4.2.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/shadow.css">
+		<script src="/moment.js"></script>
+		<script src="/axios.min.js"></script>
+		<script type="text/x-template" id="grid-template">
+		  
+		 
+		  
+		  <table class="table">
+			<thead>
+			  <tr>
+				<th v-for="key in columns"
+				  @click="sortBy(key)"
+				  :class="{ active: sortKey == key }">
+				  {{ key | capitalize }}
+				  <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+				  </span>
+				</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr v-for="entry in filteredData">
+				<td v-for="key in columns">
+				  {{entry[key]}}
+				</td>
+			  </tr>
+			</tbody>
+		  </table>
+		</script>
+		
+		
     <style>
       body{
         background: #000;
-        padding-top:20px;
+        padding-top:5px;
         padding-left:20px;
         padding-right:20px;
       }
@@ -14,14 +45,39 @@
   </head>
   <body>
     <div id="app">
+	  <current-time></current-time>
       <div class="tile is-ancestor">
       <force-release></force-release>
       <execution-status></execution-status>
       <overall-status></overall-status>
     </div>
     <progress-per-area></progress-per-area>
-    <datatable-with-failures></datatable-with-failures>
-  </div>
+		<!-- demo root element -->
+	<div class="tile is-ancestor">
+		<div class="tile is-parent">
+			<article class="tile is-child notification is-Dark">
+				<p class="subtitle">Force Failures</p>
+				<div class="content">
+				
+				  <form id="search">
+					Search <input name="query" v-model="searchQuery">
+				  </form>
+				  <demo-grid
+					:data="gridData"
+					:columns="gridColumns"
+					:filter-key="searchQuery">
+				  </demo-grid>
+				</div>
+			</article>
+		</div>
+		</div>
+	</div>
+	<div style="text-align: center">
     <script src="/components.js"></script>
+	<br>powered by:<br>
+		<a href="http://www.iovio.com" target="_blank">
+			 <img src="/poweredbyIovio.png">
+		</a>
+	</div>
   </body>
 </html>
